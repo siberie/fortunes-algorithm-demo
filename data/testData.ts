@@ -1,4 +1,4 @@
-import Vector2 from "~/core/types/Vector2";
+import Vector2 from "../src/core/types/Vector2";
 
 // export const sites = [
 //     {index: 0, position: new Vector2(260, 200), face: null},
@@ -39,7 +39,7 @@ import Vector2 from "~/core/types/Vector2";
 //     {index: 4, position: new Vector2(300, 300), face: null},
 // ]
 
-export const sites = [...new Array(20)]
+export const sites = [...new Array(40)]
     .map((_, i) => i)
     .map(i => ({
             index: i, position: new Vector2(

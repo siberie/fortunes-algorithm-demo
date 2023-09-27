@@ -1,33 +1,38 @@
 "use client"
-import React, {useCallback, useRef, useState} from "react";
+import React, {useCallback, useMemo, useRef, useState} from "react";
 import FortunesAlgorithm from "~/core/FortunesAlgorithm";
 import Display from "~/components/Display";
 import Rectangle from "~/core/types/Rectangle";
 import {sites} from "../../data/testData";
 
-
 const boundingBox = new Rectangle(0, 0, 800, 800)
-
 
 const MainPage = () => {
     const [directrix, setDirectrix] = useState<number>(0)
     const timer = useRef<number | null>(null)
     const [isPlaying, setIsPlaying] = useState<boolean>(false)
-    const algorithm = new FortunesAlgorithm(sites)
-    algorithm.run(directrix)
-    algorithm.diagram.bind(boundingBox)
+
+    const algorithm = useMemo(() => {
+            const a = new FortunesAlgorithm(sites)
+            a.run(directrix)
+            a.diagram.bind(boundingBox)
+            return a
+        },
+        [directrix, boundingBox, sites]
+    )
 
     const setPlaying = useCallback((playing: boolean) => {
-        if (playing) {
-            timer.current = window.setInterval(() => {
-                setDirectrix(directrix => directrix + 1)
-            }, 100)
-        } else {
-            if (timer.current) {
-                window.clearInterval(timer.current)
+            if (playing) {
+                timer.current = window.setInterval(() => {
+                    setDirectrix(directrix => directrix + 1)
+                }, 100)
+            } else {
+                if (timer.current) {
+                    window.clearInterval(timer.current)
+                }
             }
-        }
-    }, [directrix])
+        }, [directrix]
+    )
 
     return (
         <div>
@@ -58,8 +63,12 @@ const MainPage = () => {
                 setPlaying(false)
             }}>-10
             </button>
-            <Display diagram={algorithm.diagram} beachline={algorithm.beachline} directrix={directrix}
-                     boundingBox={boundingBox}/>
+            <Display
+                diagram={algorithm.diagram}
+                beachline={algorithm.beachline}
+                directrix={directrix}
+                boundingBox={boundingBox}
+            />
         </div>
     );
 }

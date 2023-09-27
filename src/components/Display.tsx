@@ -15,16 +15,6 @@ type DisplayProps = {
     className?: string
 }
 
-const colors = [
-    "#ff39bb",
-    "#ffbb39",
-    "#39ffbb",
-    "#39bbff",
-    "#bb39ff",
-    "#bbff39",
-    "#ffffff",
-]
-
 const drawCircle = (ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, color = "#ffffff") => {
     ctx.beginPath()
     ctx.arc(x, y, radius, 0, 2 * Math.PI)

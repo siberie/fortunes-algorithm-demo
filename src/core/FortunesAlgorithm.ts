@@ -35,7 +35,7 @@ class FortunesAlgorithm {
 
             if (event.type === "site") {
                 this.handleSiteEvent(event)
-            } else if(!event.invalidated){
+            } else if (!event.invalidated) {
                 this.handleCircleEvent(event)
             }
         }
@@ -54,7 +54,9 @@ class FortunesAlgorithm {
         const nextNode = node.queueNode.next?.value ?? null
 
         const site = event.site
-        const previousSite = (prevNode?.value.site ?? nextNode?.value.site)!
+        const previousSite = (prevNode?.value.site ?? nextNode?.value.site) ?? null
+
+        if (previousSite === null) return
 
         const [edge, twin] = this.createEdge(site, previousSite)
 
@@ -104,11 +106,15 @@ class FortunesAlgorithm {
         edge.color = "red"
         twin.color = "red"
 
-        node.value.leftEdge!.start = vertex
-        node.value.leftEdge!.twin.end = vertex
+        if (node.value.leftEdge) {
+            node.value.leftEdge.start = vertex
+            node.value.leftEdge.twin.end = vertex
+        }
 
-        node.value.rightEdge!.start = vertex
-        node.value.rightEdge!.twin.end = vertex
+        if (node.value.rightEdge) {
+            node.value.rightEdge!.start = vertex
+            node.value.rightEdge!.twin.end = vertex
+        }
 
         edge.end = vertex
         twin.start = vertex
@@ -124,7 +130,7 @@ class FortunesAlgorithm {
         const prevNode = node.queueNode.prev?.value ?? null
         const nextNode = node.queueNode.next?.value ?? null
 
-        if(node.value.event) {
+        if (node.value.event) {
             node.value.event.invalidated = true
             node.value.event = null
         }

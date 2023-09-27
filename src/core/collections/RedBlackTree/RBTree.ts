@@ -212,59 +212,65 @@ class RBTree<ValueType> {
     private balanceTreeAfterRemove(node: RBTreeNode<ValueType>): void {
         while (node !== this.root && node.color === "black") {
             const parent = node.parent!
-            let sibling: RBTreeNode<ValueType>
+            let sibling: RBTreeNode<ValueType> | null
 
             if (node === parent.left) {
                 sibling = parent.right!
 
-                if (sibling.color === "red") {
+                if (sibling?.color === "red") {
                     sibling.color = "black"
                     parent.color = "red"
                     this.rotateLeft(parent)
                     sibling = parent.right!
                 }
 
-                if (sibling.left!.color === "black" && sibling.right!.color === "black") {
+                if (sibling?.left?.color === "black" && sibling.right?.color === "black") {
                     sibling.color = "red"
                     node = parent
                 } else {
-                    if (sibling.right!.color === "black") {
-                        sibling.left!.color = "black"
+                    if (sibling?.right?.color === "black") {
+                        if (sibling.left)
+                            sibling.left.color = "black"
                         sibling.color = "red"
                         this.rotateRight(sibling)
-                        sibling = parent.right!
+                        sibling = parent.right
                     }
 
-                    sibling.color = parent.color
+                    if (sibling)
+                        sibling.color = parent.color
                     parent.color = "black"
-                    sibling.right!.color = "black"
+                    if (sibling?.right)
+                        sibling.right.color = "black"
                     this.rotateLeft(parent)
                     node = this.root!
                 }
             } else {
-                sibling = parent.left!
+                sibling = parent.left
 
-                if (sibling.color === "red") {
+                if (sibling?.color === "red") {
                     sibling.color = "black"
                     parent.color = "red"
                     this.rotateRight(parent)
-                    sibling = parent.left!
+                    sibling = parent.left
                 }
 
-                if (sibling.right!.color === "black" && sibling.left!.color === "black") {
+                if (sibling?.right?.color === "black" && sibling.left?.color === "black") {
                     sibling.color = "red"
                     node = parent
                 } else {
-                    if (sibling.left!.color === "black") {
-                        sibling.right!.color = "black"
+                    if (sibling?.left?.color === "black") {
+                        if (sibling.right)
+                            sibling.right.color = "black"
                         sibling.color = "red"
                         this.rotateLeft(sibling)
-                        sibling = parent.left!
+                        sibling = parent.left
                     }
 
-                    sibling.color = parent.color
+                    if (sibling)
+                        sibling.color = parent.color
                     parent.color = "black"
-                    sibling.left!.color = "black"
+                    if (sibling?.left)
+                        sibling.left.color = "black"
                     this.rotateRight(parent)
                     node = this.root!
                 }
@@ -275,14 +281,15 @@ class RBTree<ValueType> {
     }
 
     private rotateLeft(node: RBTreeNode<ValueType>): void {
-        const right = node.right!
-        node.right = right.left
+        const right = node.right
+        node.right = right?.left ?? null
 
-        if (right.left) {
+        if (right?.left) {
             right.left.parent = node
         }
 
-        right.parent = node.parent
+        if (right)
+            right.parent = node.parent
 
         if (!node.parent) {
             this.root = right
@@ -292,19 +299,21 @@ class RBTree<ValueType> {
             node.parent.right = right
         }
 
-        right.left = node
+        if (right)
+            right.left = node
         node.parent = right
     }
 
     private rotateRight(node: RBTreeNode<ValueType>): void {
-        const left = node.left!
-        node.left = left.right
+        const left = node.left
+        node.left = left?.right ?? null
 
-        if (left.right) {
+        if (left?.right) {
             left.right.parent = node
         }
 
-        left.parent = node.parent
+        if (left)
+            left.parent = node.parent
 
         if (!node.parent) {
             this.root = left
@@ -314,7 +323,9 @@ class RBTree<ValueType> {
             node.parent.left = left
         }
 
-        left.right = node
+        if (left)
+            left.right = node
+
         node.parent = left
     }
 }
