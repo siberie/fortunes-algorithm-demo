@@ -1,9 +1,9 @@
 "use client"
 import clsx from "clsx";
 import {useEffect, useRef} from "react";
-import Diagram from "~/core/Diagram";
-import Rectangle from "~/core/types/Rectangle";
-import Beachline from "~/core/Beachline";
+import type Diagram from "~/core/Diagram";
+import type Rectangle from "~/core/types/Rectangle";
+import type Beachline from "~/core/Beachline";
 
 type DisplayProps = {
     diagram: Diagram
@@ -25,7 +25,7 @@ const colors = [
     "#ffffff",
 ]
 
-const drawCircle = (ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, color: string = "#ffffff") => {
+const drawCircle = (ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, color = "#ffffff") => {
     ctx.beginPath()
     ctx.arc(x, y, radius, 0, 2 * Math.PI)
     ctx.fillStyle = color
@@ -39,7 +39,7 @@ const drawLine = (
     y0: number,
     x1: number,
     y1: number,
-    color: string = "#ffffff"
+    color =  "#ffffff"
 ) => {
     ctx.beginPath()
     ctx.moveTo(x0, y0)

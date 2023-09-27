@@ -59,7 +59,7 @@ class Diagram {
         const b = edge.twin.face.site.position
 
         const delta = b.sub(a)
-        let direction = delta.orthogonal().normalised()
+        const direction = delta.orthogonal().normalised()
         const origin = delta.mul(0.5).add(a)
 
         console.log("delta:", delta.x, delta.y)

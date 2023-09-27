@@ -89,7 +89,7 @@ class Beachline {
     }
 
     print() {
-        let nodes: number[] = []
+        const nodes: number[] = []
         this.tree.acceptListVisitor({
             visit(node: RBTreeNode<Arc>) {
                 nodes.push(node.value.site.index)

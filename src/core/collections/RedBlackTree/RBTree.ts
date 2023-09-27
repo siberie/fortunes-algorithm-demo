@@ -126,7 +126,7 @@ class RBTree<ValueType> {
     }
 
     acceptTreeVisitor(visitor: RBTreeVisitor<ValueType>): void {
-        let queue = new Deque<RBTreeNode<ValueType>>()
+        const queue = new Deque<RBTreeNode<ValueType>>()
         queue.enqueue(this.root!)
 
         while (queue.length > 0) {
@@ -172,7 +172,7 @@ class RBTree<ValueType> {
             grandpa = parent.parent!;
             if (parent === grandpa.left) {
                 uncle = grandpa.right!;
-                if (uncle && uncle.color) {
+                if (uncle?.color) {
                     parent.color = uncle.color = "black";
                     grandpa.color = "red";
                     node = grandpa;
@@ -188,7 +188,7 @@ class RBTree<ValueType> {
                 }
             } else {
                 uncle = grandpa.left!;
-                if (uncle && uncle.color) {
+                if (uncle?.color) {
                     parent.color = uncle.color = "black";
                     grandpa.color = "red";
                     node = grandpa;
@@ -211,7 +211,7 @@ class RBTree<ValueType> {
 
     private balanceTreeAfterRemove(node: RBTreeNode<ValueType>): void {
         while (node !== this.root && node.color === "black") {
-            let parent = node.parent!
+            const parent = node.parent!
             let sibling: RBTreeNode<ValueType>
 
             if (node === parent.left) {
