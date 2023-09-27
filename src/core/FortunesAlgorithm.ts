@@ -112,8 +112,8 @@ class FortunesAlgorithm {
         }
 
         if (node.value.rightEdge) {
-            node.value.rightEdge!.start = vertex
-            node.value.rightEdge!.twin.end = vertex
+            node.value.rightEdge.start = vertex
+            node.value.rightEdge.twin.end = vertex
         }
 
         edge.end = vertex
