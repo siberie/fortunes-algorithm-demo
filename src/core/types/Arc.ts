@@ -3,7 +3,7 @@ import Edge from "./Edge";
 import {QueueEvent} from "../EventQueue";
 import CircleEvent from "./CircleEvent";
 
-type Function<Args, Return> = (args: Args) => Return
+type F<Args, Return> = (args: Args) => Return
 
 class Arc {
     site: Site
@@ -29,7 +29,7 @@ class Arc {
         this.color = color
     }
 
-    getCoefficientFunctions(): [Function<number, number>, Function<number, number>, Function<number, number>] {
+    getCoefficientFunctions(): [F<number, number>, F<number, number>, F<number, number>] {
         const a = (y: number) => 1 / (2 * (this.site.position.y - y))
         const b = (y: number) => -2 * this.site.position.x * a(y)
         const c = (y: number) => a(y) * (this.site.position.normSquared() - y ** 2)

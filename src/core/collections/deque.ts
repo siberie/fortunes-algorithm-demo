@@ -31,7 +31,7 @@ class Deque<ValueType> {
     }
 
     enqueue(value: ValueType): DequeNode<ValueType> {
-        let newNode = createDequeNode(value);
+        const newNode = createDequeNode(value);
         this.insertAfter(null, newNode)
         console.log('enqueue', this.count, newNode)
 
