@@ -276,8 +276,8 @@ class RBTree<ValueType> {
                 }
             }
         }
-
-        node.color = "black"
+        if (node)
+            node.color = "black"
     }
 
     private rotateLeft(node: RBTreeNode<ValueType>): void {

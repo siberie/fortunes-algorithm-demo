@@ -42,7 +42,7 @@ class FortunesAlgorithm {
     }
 
     private handleSiteEvent(event: SiteEvent) {
-        console.log("site event", event.site.index, event.position.x, event.position.y)
+        // console.log("site event", event.site.index, event.position.x, event.position.y)
         if (this.beachline.length === 0) {
             this.beachline.addSite(event.site)
             return
@@ -71,7 +71,7 @@ class FortunesAlgorithm {
             prevNode.value.rightEdge = twin
         }
 
-        this.beachline.print()
+        // this.beachline.print()
 
         if (prevNode)
             this.checkCircleEvent(prevNode, site.position.y)
@@ -84,21 +84,23 @@ class FortunesAlgorithm {
 
     private handleCircleEvent(event: CircleEvent) {
         const node = event.node
-        const prevNode = node.queueNode.prev!.value
-        const nextNode = node.queueNode.next!.value
-        console.log(
-            "circle event",
-            prevNode.value.site.index,
-            node.value.site.index,
-            nextNode.value.site.index,
-            event.position.x,
-            event.center.y,
-            event.radius,
-            event.position.y,
-        )
+        const prevNode = node.queueNode.prev?.value ?? null
+        const nextNode = node.queueNode.next?.value ?? null
+
+        if(prevNode === null || nextNode === null) return
+        // console.log(
+        //     "circle event",
+        //     prevNode.value.site.index,
+        //     node.value.site.index,
+        //     nextNode.value.site.index,
+        //     event.position.x,
+        //     event.center.y,
+        //     event.radius,
+        //     event.position.y,
+        // )
         this.beachline.remove(event.node)
 
-        this.beachline.print()
+        // this.beachline.print()
 
         const [edge, twin] = this.createEdge(prevNode.value.site, nextNode.value.site)
         const vertex: Vertex = this.diagram.createVertex(event.center)
@@ -154,16 +156,16 @@ class FortunesAlgorithm {
             radius,
             node
         }
-        console.log(
-            "--> adding circle event",
-            prevNode.value.site.index,
-            node.value.site.index,
-            nextNode.value.site.index,
-            event.position.x,
-            event.center.y,
-            event.radius,
-            event.position.y,
-        )
+        // console.log(
+        //     "--> adding circle event",
+        //     prevNode.value.site.index,
+        //     node.value.site.index,
+        //     nextNode.value.site.index,
+        //     event.position.x,
+        //     event.center.y,
+        //     event.radius,
+        //     event.position.y,
+        // )
 
         node.value.event = event
         this.eventQueue.enqueue(event)

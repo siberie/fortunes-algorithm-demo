@@ -39,7 +39,7 @@ import Vector2 from "../src/core/types/Vector2";
 //     {index: 4, position: new Vector2(300, 300), face: null},
 // ]
 
-export const sites = [...new Array(40)]
+export const sites = [...new Array(30)]
     .map((_, i) => i)
     .map(i => ({
             index: i, position: new Vector2(

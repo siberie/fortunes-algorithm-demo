@@ -62,10 +62,6 @@ class Diagram {
         const direction = delta.orthogonal().normalised()
         const origin = delta.mul(0.5).add(a)
 
-        console.log("delta:", delta.x, delta.y)
-        console.log("direction:", direction.x, direction.y)
-        console.log("cross:", delta.cross(direction))
-
         return {origin, direction}
     }
 }

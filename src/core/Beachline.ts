@@ -6,6 +6,7 @@ import RBTreeVisitor from "./collections/RedBlackTree/RBTreeVisitor";
 
 class Beachline {
     private tree: RBTree<Arc>
+    private clippingBounds: [number, number] = [Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY]
 
     constructor() {
         this.tree = new RBTree<Arc>()
@@ -24,27 +25,60 @@ class Beachline {
         const lowerDelta = Math.abs(lowerBound - site.position.x)
         const upperDelta = Math.abs(upperBound - site.position.x)
 
+        let newNode: RBTreeNode<Arc>
+
         if (site.position.x > node.value.site.position.x) {
             if (lowerDelta > Number.EPSILON && upperDelta > Number.EPSILON) {
                 if (newArc.intersection(node.value, site.position.y))
                     this.tree.insertAfter(node, node.value.copy())
-                return this.tree.insertAfter(node, newArc)
+                newNode = this.tree.insertAfter(node, newArc)
             } else if (lowerDelta < Number.EPSILON) {
-                return this.tree.insertBefore(node, newArc)
+                newNode = this.tree.insertBefore(node, newArc)
             } else {
-                return this.tree.insertAfter(node, newArc)
+                newNode = this.tree.insertAfter(node, newArc)
             }
         } else {
             if (lowerDelta > Number.EPSILON && upperDelta > Number.EPSILON) {
                 if (node.value.intersection(newArc, site.position.y))
                     this.tree.insertBefore(node, node.value.copy())
-                return this.tree.insertBefore(node, newArc)
+                newNode = this.tree.insertBefore(node, newArc)
             } else if (lowerDelta < Number.EPSILON) {
-                return this.tree.insertAfter(node, newArc)
+                newNode = this.tree.insertAfter(node, newArc)
             } else {
-                return this.tree.insertBefore(node, newArc)
+                newNode = this.tree.insertBefore(node, newArc)
             }
         }
+
+        const head = this.tree.nodeQueue.front()
+        const tail = this.tree.nodeQueue.back()
+
+        if (tail && tail.prev) {
+            const tailArc = tail.value.value
+            const prevArc = tail.prev.value.value
+            const intersection = prevArc.intersection(tailArc, site.position.y)
+            if (intersection && intersection > this.clippingBounds[1]) {
+                if (tailArc.site.position.y < prevArc.site.position.y) {
+                    console.log("clipping tail")
+                    this.tree.remove(tail.value)
+                }
+            }
+        }
+
+        if (head && head.next) {
+            const headArc = head.value.value
+            const nextArc = head.next.value.value
+            const intersection = headArc.intersection(nextArc, site.position.y)
+            if (intersection && intersection < this.clippingBounds[0]) {
+                if (headArc.site.position.y < nextArc.site.position.y) {
+                    console.log("clipping head")
+                    this.tree.remove(head.value)
+                }
+            }
+        }
+
+        console.log("beachline length", this.tree.length)
+
+        return newNode
     }
 
     accept(visitor: RBTreeVisitor<Arc>) {
@@ -82,6 +116,10 @@ class Beachline {
         }
 
         return null
+    }
+
+    setClippingBounds(left: number, right: number) {
+        this.clippingBounds = [left, right]
     }
 
     get length(): number {

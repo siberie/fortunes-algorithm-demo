@@ -1,9 +1,10 @@
 "use client"
 import clsx from "clsx";
-import {useEffect, useRef} from "react";
+import {MouseEvent, useEffect, useRef} from "react";
 import type Diagram from "~/core/Diagram";
 import type Rectangle from "~/core/types/Rectangle";
 import type Beachline from "~/core/Beachline";
+import Vector2 from "~/core/types/Vector2";
 
 type DisplayProps = {
     diagram: Diagram
@@ -13,6 +14,8 @@ type DisplayProps = {
 
     boundingBox: Rectangle
     className?: string
+
+    onClick?: (position: Vector2) => void
 }
 
 const drawCircle = (ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, color = "#ffffff") => {
@@ -29,7 +32,7 @@ const drawLine = (
     y0: number,
     x1: number,
     y1: number,
-    color =  "#ffffff"
+    color = "#ffffff"
 ) => {
     ctx.beginPath()
     ctx.moveTo(x0, y0)
@@ -40,7 +43,6 @@ const drawLine = (
 }
 
 const drawBeachLine = (ctx: CanvasRenderingContext2D, beachline: Beachline, width: number, d: number) => {
-    console.log("drawing beachline")
     ctx.beginPath()
     ctx.moveTo(0, d)
     ctx.lineTo(width, d)
@@ -66,6 +68,13 @@ const drawBeachLine = (ctx: CanvasRenderingContext2D, beachline: Beachline, widt
         }
     })
 }
+
+const getCursorPosition = (canvas: HTMLCanvasElement, event: MouseEvent) => {
+    const rect = canvas.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const y = event.clientY - rect.top
+    return new Vector2(x, y)
+};
 
 const Display = (props: DisplayProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -105,7 +114,12 @@ const Display = (props: DisplayProps) => {
     )
 
     return <div className={clsx("grow", props.className)}>
-        <canvas width={96 * 8} height={96 * 8} ref={canvasRef} className="bg-neutral-800 w-full h-full"/>
+        <canvas width={96 * 8} height={96 * 8} ref={canvasRef} className="bg-neutral-800 w-full h-full"
+                onClick={event => {
+                    const position = getCursorPosition(canvasRef.current!, event)
+                    props.onClick?.(position)
+                }}
+        />
     </div>
 }
 

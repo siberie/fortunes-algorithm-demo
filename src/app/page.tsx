@@ -3,17 +3,20 @@ import React, {useCallback, useMemo, useRef, useState} from "react";
 import FortunesAlgorithm from "~/core/FortunesAlgorithm";
 import Display from "~/components/Display";
 import Rectangle from "~/core/types/Rectangle";
-import {sites} from "../../data/testData";
+import Site from "~/core/types/Site";
 
 const boundingBox = new Rectangle(0, 0, 800, 800)
 
 const MainPage = () => {
     const [directrix, setDirectrix] = useState<number>(0)
     const timer = useRef<number | null>(null)
+    const [sites, setSites] = useState<Site[]>([])
     const [isPlaying, setIsPlaying] = useState<boolean>(false)
 
-    const algorithm = useMemo(() => {
+    const algorithm = useMemo(
+        () => {
             const a = new FortunesAlgorithm(sites)
+            a.beachline.setClippingBounds(0, 800)
             a.run(directrix)
             a.diagram.bind(boundingBox)
             return a
@@ -25,7 +28,7 @@ const MainPage = () => {
             if (playing) {
                 timer.current = window.setInterval(() => {
                     setDirectrix(directrix => directrix + 1)
-                }, 100)
+                }, 50)
             } else {
                 if (timer.current) {
                     window.clearInterval(timer.current)
@@ -68,6 +71,7 @@ const MainPage = () => {
                 beachline={algorithm.beachline}
                 directrix={directrix}
                 boundingBox={boundingBox}
+                onClick={position => setSites([...sites, {index: sites.length, position, face: null}])}
             />
         </div>
     );
