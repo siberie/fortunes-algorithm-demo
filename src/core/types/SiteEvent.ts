@@ -1,5 +1,5 @@
-import Vector2 from "./Vector2";
-import Site from "./Site";
+import type Vector2 from "./Vector2";
+import type Site from "./Site";
 
 type SiteEvent = {
     type: "site"

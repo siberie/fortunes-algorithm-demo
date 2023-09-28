@@ -1,4 +1,4 @@
-import RBTreeNode from "./RBTreeNode";
+import type RBTreeNode from "./RBTreeNode";
 
 interface RBTreeVisitor<ValueType> {
     visit(node: RBTreeNode<ValueType>): void

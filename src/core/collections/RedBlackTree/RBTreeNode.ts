@@ -1,5 +1,5 @@
-import {createDequeNode, DequeNode} from "../deque";
-import RBTreeVisitor from "./RBTreeVisitor";
+import {createDequeNode, type DequeNode} from "../deque";
+import type RBTreeVisitor from "./RBTreeVisitor";
 
 class RBTreeNode<ValueType> {
     left: RBTreeNode<ValueType> | null

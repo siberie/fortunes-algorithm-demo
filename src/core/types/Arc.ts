@@ -1,7 +1,6 @@
-import Site from "./Site";
-import Edge from "./Edge";
-import {QueueEvent} from "../EventQueue";
-import CircleEvent from "./CircleEvent";
+import type Site from "./Site";
+import type Edge from "./Edge";
+import type CircleEvent from "./CircleEvent";
 
 type F<Args, Return> = (args: Args) => Return
 
@@ -71,7 +70,7 @@ class Arc {
         if (discriminant < 0) return null
 
 
-        return 0 + (-b - Math.sqrt(discriminant)) / (2 * a)
+        return (-b - Math.sqrt(discriminant)) / (2 * a)
     }
 
     copy(): Arc {

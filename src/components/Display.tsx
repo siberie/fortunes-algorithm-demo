@@ -1,6 +1,6 @@
 "use client"
 import clsx from "clsx";
-import {MouseEvent, useEffect, useRef} from "react";
+import {type MouseEvent, useEffect, useRef} from "react";
 import type Diagram from "~/core/Diagram";
 import type Rectangle from "~/core/types/Rectangle";
 import type Beachline from "~/core/Beachline";
@@ -79,6 +79,7 @@ const getCursorPosition = (canvas: HTMLCanvasElement, event: MouseEvent) => {
 const Display = (props: DisplayProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const {diagram, beachline, directrix} = props
+    const {edges, sites} = diagram
 
     useEffect(() => {
             if (!canvasRef.current)
@@ -91,11 +92,11 @@ const Display = (props: DisplayProps) => {
 
             ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-            diagram.sites.forEach(site => {
+            sites.forEach(site => {
                 drawCircle(ctx, site.position.x, site.position.y, 5, site.color ?? "white")
             })
 
-            diagram.edges.forEach((edge, index) => {
+            edges.forEach((edge) => {
                 const {start, end} = edge
                 drawLine(ctx, start!.position.x, start!.position.y, end!.position.x, end!.position.y, edge.color ?? "white")
             })
@@ -103,14 +104,7 @@ const Display = (props: DisplayProps) => {
             if (beachline && directrix)
                 drawBeachLine(ctx, beachline, canvas.width, directrix)
 
-            const x0 = 260
-            const y0 = 150
-            const x1 = x0 + 78
-            const y1 = y0 + 62
-
-            // drawCircle(ctx, x0, y0, 5)
-            // drawLine(ctx, x0, y0, x1, y1)
-        }, [canvasRef.current, props.diagram, beachline, directrix]
+        }, [edges, sites, canvasRef.current, props.diagram, beachline, directrix]
     )
 
     return <div className={clsx("grow", props.className)}>

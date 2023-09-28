@@ -1,5 +1,5 @@
-import Site from "./Site";
-import Edge from "./Edge";
+import type Site from "./Site";
+import type Edge from "./Edge";
 
 type Face = {
     site: Site

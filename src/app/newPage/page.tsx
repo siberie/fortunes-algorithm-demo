@@ -1,7 +1,8 @@
 import clsx from "clsx";
+import {type ReactNode} from "react";
 
 type WrapperProps = {
-    children: JSX.Element
+    children: ReactNode
     className?: string
     selected?: boolean
 }

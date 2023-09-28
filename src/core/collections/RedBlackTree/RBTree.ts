@@ -1,6 +1,6 @@
 import Deque from "../deque";
 import RBTreeNode from "./RBTreeNode";
-import RBTreeVisitor from "./RBTreeVisitor";
+import type RBTreeVisitor from "./RBTreeVisitor";
 
 class RBTree<ValueType> {
     private root: RBTreeNode<ValueType> | null

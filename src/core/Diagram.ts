@@ -1,10 +1,10 @@
-import Vertex from "./types/Vertex";
-import Site from "./types/Site";
-import Edge from "./types/Edge";
-import Face from "./types/Face";
-import Rectangle from "./types/Rectangle";
-import Ray from "./types/Ray";
-import Vector2 from "./types/Vector2";
+import type Vertex from "./types/Vertex";
+import type Site from "./types/Site";
+import type Edge from "./types/Edge";
+import type Face from "./types/Face";
+import type Rectangle from "./types/Rectangle";
+import type Ray from "./types/Ray";
+import type Vector2 from "./types/Vector2";
 
 class Diagram {
     vertices: Vertex[]

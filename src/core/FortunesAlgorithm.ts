@@ -1,14 +1,14 @@
 import Beachline from "./Beachline";
-import Site from "./types/Site";
+import type Site from "./types/Site";
 import EventQueue from "./EventQueue";
-import CircleEvent from "./types/CircleEvent";
-import SiteEvent from "./types/SiteEvent";
-import Arc from "./types/Arc";
+import type CircleEvent from "./types/CircleEvent";
+import type SiteEvent from "./types/SiteEvent";
+import type Arc from "./types/Arc";
 import Vector2 from "./types/Vector2";
-import RBTreeNode from "./collections/RedBlackTree/RBTreeNode";
+import type RBTreeNode from "./collections/RedBlackTree/RBTreeNode";
 import Diagram from "./Diagram";
-import Vertex from "./types/Vertex";
-import Edge from "./types/Edge";
+import type Vertex from "./types/Vertex";
+import type Edge from "./types/Edge";
 
 class FortunesAlgorithm {
     beachline: Beachline
@@ -74,12 +74,12 @@ class FortunesAlgorithm {
         // this.beachline.print()
 
         if (prevNode)
-            this.checkCircleEvent(prevNode, site.position.y)
+            this.checkCircleEvent(prevNode)
 
-        this.checkCircleEvent(node, site.position.y)
+        this.checkCircleEvent(node)
 
         if (nextNode)
-            this.checkCircleEvent(nextNode, site.position.y)
+            this.checkCircleEvent(nextNode)
     }
 
     private handleCircleEvent(event: CircleEvent) {
@@ -124,11 +124,11 @@ class FortunesAlgorithm {
         prevNode.value.rightEdge = edge
         nextNode.value.leftEdge = edge
 
-        this.checkCircleEvent(prevNode, event.position.y)
-        this.checkCircleEvent(nextNode, event.position.y)
+        this.checkCircleEvent(prevNode)
+        this.checkCircleEvent(nextNode)
     }
 
-    private checkCircleEvent(node: RBTreeNode<Arc>, y: number) {
+    private checkCircleEvent(node: RBTreeNode<Arc>) {
         const prevNode = node.queueNode.prev?.value ?? null
         const nextNode = node.queueNode.next?.value ?? null
 

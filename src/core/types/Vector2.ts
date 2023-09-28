@@ -21,7 +21,6 @@ class Vector2 {
     add = (v: Vector2): Vector2 => new Vector2(this.x + v.x, this.y + v.y)
     sub = (v: Vector2): Vector2 => new Vector2(this.x - v.x, this.y - v.y)
     mul = (x: number): Vector2 => new Vector2(this.x * x, this.y * x)
-    div = (x: number): Vector2 => new Vector2(this.x / x, this.y / x)
 
     cross = (v: Vector2): number => this.x * v.y - this.y * v.x
 

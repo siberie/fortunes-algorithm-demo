@@ -1,5 +1,5 @@
-import Vector2 from "./Vector2";
-import Face from "./Face";
+import type Vector2 from "./Vector2";
+import type Face from "./Face";
 
 type Site = {
     index: number

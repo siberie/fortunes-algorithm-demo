@@ -3,7 +3,7 @@ import React, {useCallback, useMemo, useRef, useState} from "react";
 import FortunesAlgorithm from "~/core/FortunesAlgorithm";
 import Display from "~/components/Display";
 import Rectangle from "~/core/types/Rectangle";
-import Site from "~/core/types/Site";
+import type Site from "~/core/types/Site";
 
 const boundingBox = new Rectangle(0, 0, 800, 800)
 
@@ -11,7 +11,6 @@ const MainPage = () => {
     const [directrix, setDirectrix] = useState<number>(0)
     const timer = useRef<number | null>(null)
     const [sites, setSites] = useState<Site[]>([])
-    const [isPlaying, setIsPlaying] = useState<boolean>(false)
 
     const algorithm = useMemo(
         () => {
@@ -21,7 +20,7 @@ const MainPage = () => {
             a.diagram.bind(boundingBox)
             return a
         },
-        [directrix, boundingBox, sites]
+        [directrix, sites]
     )
 
     const setPlaying = useCallback((playing: boolean) => {
@@ -34,7 +33,7 @@ const MainPage = () => {
                     window.clearInterval(timer.current)
                 }
             }
-        }, [directrix]
+        }, [setDirectrix]
     )
 
     return (

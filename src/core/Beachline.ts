@@ -1,8 +1,8 @@
 import RBTree from "./collections/RedBlackTree/RBTree";
 import Arc from "./types/Arc";
-import Site from "./types/Site";
+import type Site from "./types/Site";
 import RBTreeNode from "./collections/RedBlackTree/RBTreeNode";
-import RBTreeVisitor from "./collections/RedBlackTree/RBTreeVisitor";
+import type RBTreeVisitor from "./collections/RedBlackTree/RBTreeVisitor";
 
 class Beachline {
     private tree: RBTree<Arc>
@@ -52,7 +52,7 @@ class Beachline {
         const head = this.tree.nodeQueue.front()
         const tail = this.tree.nodeQueue.back()
 
-        if (tail && tail.prev) {
+        if (tail?.prev) {
             const tailArc = tail.value.value
             const prevArc = tail.prev.value.value
             const intersection = prevArc.intersection(tailArc, site.position.y)
@@ -64,7 +64,7 @@ class Beachline {
             }
         }
 
-        if (head && head.next) {
+        if (head?.next) {
             const headArc = head.value.value
             const nextArc = head.next.value.value
             const intersection = headArc.intersection(nextArc, site.position.y)

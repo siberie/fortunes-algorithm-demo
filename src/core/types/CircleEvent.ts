@@ -1,6 +1,6 @@
-import Vector2 from "./Vector2";
-import Arc from "./Arc";
-import RBTreeNode from "../collections/RedBlackTree/RBTreeNode";
+import type Vector2 from "./Vector2";
+import type Arc from "./Arc";
+import type RBTreeNode from "../collections/RedBlackTree/RBTreeNode";
 
 type CircleEvent = {
     type: "circle"

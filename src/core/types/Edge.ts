@@ -1,6 +1,5 @@
-import Face from "./Face";
-import Vertex from "./Vertex";
-import Site from "./Site";
+import type Face from "./Face";
+import type Vertex from "./Vertex";
 
 
 type Edge = {

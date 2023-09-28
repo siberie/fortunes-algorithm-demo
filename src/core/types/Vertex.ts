@@ -1,4 +1,4 @@
-import Vector2 from "./Vector2";
+import type Vector2 from "./Vector2";
 
 type Vertex = {
     position: Vector2

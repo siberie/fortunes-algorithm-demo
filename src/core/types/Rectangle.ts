@@ -1,4 +1,4 @@
-import Ray from "./Ray";
+import type Ray from "./Ray";
 import Vector2 from "./Vector2";
 
 class Rectangle {

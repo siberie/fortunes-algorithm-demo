@@ -1,6 +1,6 @@
 import {heapExtract, heapInsert} from "./collections/heap";
-import SiteEvent from "./types/SiteEvent";
-import CircleEvent from "./types/CircleEvent";
+import type SiteEvent from "./types/SiteEvent";
+import type CircleEvent from "./types/CircleEvent";
 
 export type QueueEvent = SiteEvent | CircleEvent;
 
@@ -29,11 +29,5 @@ class EventQueue {
     isEmpty(): boolean {
         return this.queue.length === 0;
     }
-
-    size(): number {
-        return this.queue.length;
-    }
-
 }
-
 export default EventQueue
