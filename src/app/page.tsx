@@ -4,6 +4,7 @@ import FortunesAlgorithm from "~/core/FortunesAlgorithm";
 import Display from "~/components/Display";
 import Rectangle from "~/core/types/Rectangle";
 import type Site from "~/core/types/Site";
+import {distanceSquared} from "~/utils/measure";
 
 const boundingBox = new Rectangle(0, 0, 800, 800)
 
@@ -11,6 +12,15 @@ const MainPage = () => {
     const [directrix, setDirectrix] = useState<number>(0)
     const timer = useRef<number | null>(null)
     const [sites, setSites] = useState<Site[]>([])
+
+    const addSite = useCallback((position: { x: number, y: number }) => {
+        const newSite = {index: sites.length, position, face: null} as Site
+        if (sites.some(site => distanceSquared(site, newSite) < Number.EPSILON)) {
+            console.log("Site already exists")
+            return
+        }
+        setSites([...sites, newSite])
+    }, [sites])
 
     const algorithm = useMemo(
         () => {
@@ -70,7 +80,7 @@ const MainPage = () => {
                 beachline={algorithm.beachline}
                 directrix={directrix}
                 boundingBox={boundingBox}
-                onClick={position => setSites([...sites, {index: sites.length, position, face: null}])}
+                onClick={position => addSite(position)}
             />
         </div>
     );
