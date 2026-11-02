@@ -104,7 +104,7 @@ const Display = (props: DisplayProps) => {
             if (beachline && directrix)
                 drawBeachLine(ctx, beachline, canvas.width, directrix)
 
-        }, [edges, sites, canvasRef.current, props.diagram, beachline, directrix]
+        }, [edges, sites, props.diagram, beachline, directrix]
     )
 
     return <div className={clsx("grow", props.className)}>

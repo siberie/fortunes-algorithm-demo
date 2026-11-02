@@ -168,7 +168,7 @@ class RBTree<ValueType> {
         let grandpa, uncle: RBTreeNode<ValueType>;
         let parent = node.parent!
 
-        while (parent && parent.color === "red") {
+        while (parent?.color === "red") {
             grandpa = parent.parent!;
             if (parent === grandpa.left) {
                 uncle = grandpa.right!;

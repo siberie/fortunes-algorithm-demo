@@ -53,8 +53,7 @@ class Deque<ValueType> {
             newNode.next = null
             newNode.prev = null
         } else {
-            if (!node)
-                node = this.head
+            node ??= this.head
 
             if (node === this.head)
                 this.head = newNode
@@ -81,8 +80,7 @@ class Deque<ValueType> {
             newNode.next = null
             newNode.prev = null
         } else {
-            if (!node)
-                node = this.tail
+            node ??= this.tail
 
             if (node === this.tail)
                 this.tail = newNode
